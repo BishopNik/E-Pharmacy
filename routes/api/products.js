@@ -5,7 +5,6 @@ import { Router } from 'express';
 import { authenticate, isEmptyBody, validateBody } from '../../middlewares/index.js';
 import { ctrlWrapper } from '../../utils/index.js';
 import {
-	getAllProducts,
 	getSortProducts,
 	addProduct,
 	editProduct,
@@ -17,9 +16,7 @@ const productsRouter = Router();
 
 productsRouter.use(authenticate);
 
-productsRouter.get('/', ctrlWrapper(getAllProducts));
-
-productsRouter.get('/?', ctrlWrapper(getSortProducts));
+productsRouter.get('/', ctrlWrapper(getSortProducts));
 
 productsRouter.post('/', isEmptyBody, validateBody(addProductSchema), ctrlWrapper(addProduct));
 

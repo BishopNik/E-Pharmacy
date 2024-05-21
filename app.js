@@ -37,7 +37,7 @@ app.use('/api/dashboard', dashboardRouter);
 // app.use('/api/customers', customersRouter);
 
 // // Orders
-// app.use('/api/orders', ordersRouter);
+app.use('/api/orders', ordersRouter);
 
 // // Product
 // app.use('/api/products', productsRouter);

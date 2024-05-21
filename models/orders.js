@@ -1,57 +1,53 @@
 /** @format */
 
 import { Schema, model } from 'mongoose';
-import Joi from 'joi';
-import { handleMongooseError, addUpdateSettings } from '../utils/index.js';
 
-const cardSchema = new Schema(
+const status = ['Pending', 'Confirmed', 'Cancelled', 'Processing', 'Shipped', 'Delivered'];
+
+const orderSchema = new Schema(
 	{
+		photo: {
+			type: String,
+			required: true,
+			validate: {
+				validator: function (v) {
+					return /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(v);
+				},
+				message: props => `${props.value} is not a valid image URL!`,
+			},
+		},
 		name: {
 			type: String,
-			required: [true, 'Set name for card'],
+			required: true,
+			trim: true,
 		},
-		text: {
+		address: {
 			type: String,
+			required: true,
+			trim: true,
 		},
-		deadline: {
+		products: {
 			type: Number,
+			required: true,
+			min: 1,
 		},
-		priority: {
-			type: String,
-			enum: ['without', 'low', 'medium', 'high'],
-			default: 'without',
-		},
-		columnId: {
-			type: String,
-			required: [true, 'Set deadline for card'],
-		},
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: 'user',
-		},
-		indexCard: {
+		price: {
 			type: Number,
-			default: 0,
+			required: true,
+			min: 0,
+		},
+		status: {
+			type: String,
+			required: true,
+			enum: status,
+		},
+		order_date: {
+			type: Date,
+			required: true,
+			default: Date.now,
 		},
 	},
-	{ versionKey: false }
+	{ versionKey: false, timestamps: true }
 );
 
-cardSchema.post('save', handleMongooseError);
-cardSchema.pre('findOneAndUpdate', addUpdateSettings);
-cardSchema.post('findOneAndUpdate', handleMongooseError);
-
-export const cardSchemaJoi = Joi.object({
-	columnId: Joi.string().required().messages({
-		message: `"missing required columnId field"`,
-	}),
-	name: Joi.string().required().messages({
-		message: `"missing required name field"`,
-	}),
-	deadline: Joi.number().allow(null),
-	text: Joi.string().allow(''),
-	priority: Joi.string().allow(''),
-	indexCard: Joi.number(),
-});
-
-export const Cards = model('card', cardSchema);
+export const Orders = model('order', orderSchema);
