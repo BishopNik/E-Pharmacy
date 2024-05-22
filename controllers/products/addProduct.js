@@ -1,11 +1,9 @@
 /** @format */
 
+import { Products } from '../../models/index.js';
+
 export const addProduct = async (req, res) => {
-	const { text, email } = req.body;
-	try {
-		res.status(200).json({ message: 'Email sent successfully' });
-	} catch (error) {
-		console.error('Error sending email:', error);
-		res.status(500).json({ message: 'Error sending email' });
-	}
+	const product = await Products.create({ ...req.body });
+
+	res.status(201).json(product);
 };

@@ -1,11 +1,17 @@
 /** @format */
 
+import { Products } from '../../models/index.js';
+
 export const getSortProducts = async (req, res) => {
-	const { text, email } = req.body;
-	try {
-		res.status(200).json({ message: 'Email sent successfully' });
-	} catch (error) {
-		console.error('Error sending email:', error);
-		res.status(500).json({ message: 'Error sending email' });
+	const { sortBy, revers, nameProduct } = req.query;
+
+	const query = nameProduct ? { name: { $regex: nameProduct, $options: 'i' } } : {};
+
+	let products = await Products.find(query).sort(sortBy);
+
+	if (Number(revers)) {
+		products = products.reverse();
 	}
+
+	res.json(products);
 };

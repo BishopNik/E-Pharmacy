@@ -10,7 +10,7 @@ import {
 	editProduct,
 	delProduct,
 } from '../../controllers/products/index.js';
-import { addProductSchema, editProductSchema } from '../../models/index.js';
+import { productJoiSchema } from '../../models/index.js';
 
 const productsRouter = Router();
 
@@ -18,12 +18,12 @@ productsRouter.use(authenticate);
 
 productsRouter.get('/', ctrlWrapper(getSortProducts));
 
-productsRouter.post('/', isEmptyBody, validateBody(addProductSchema), ctrlWrapper(addProduct));
+productsRouter.post('/', isEmptyBody, validateBody(productJoiSchema), ctrlWrapper(addProduct));
 
 productsRouter.put(
 	'/:productId',
 	isEmptyBody,
-	validateBody(editProductSchema),
+	validateBody(productJoiSchema),
 	ctrlWrapper(editProduct)
 );
 
