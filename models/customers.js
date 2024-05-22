@@ -1,43 +1,64 @@
 /** @format */
 
 import { Schema, model } from 'mongoose';
-import Joi from 'joi';
-import { handleMongooseError, addUpdateSettings } from '../utils/index.js';
 
-const columnSchema = new Schema(
+const customerSchema = new Schema(
 	{
+		photo: {
+			type: String,
+			required: true,
+			validate: {
+				validator: function (v) {
+					return /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(v);
+				},
+				message: props => `${props.value} is not a valid image URL!`,
+			},
+		},
 		name: {
 			type: String,
-			required: [true, 'Set name for board'],
+			required: true,
+			trim: true,
 		},
-		boardId: {
+		email: {
 			type: String,
-			required: [true, 'Set boardId for board'],
+			required: true,
+			unique: true,
+			lowercase: true,
+			trim: true,
+			validate: {
+				validator: function (v) {
+					return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+				},
+				message: props => `${props.value} is not a valid email!`,
+			},
 		},
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: 'user',
+		spent: {
+			type: Number,
+			required: true,
+			min: 0,
+		},
+		phone: {
+			type: String,
+			required: true,
+			validate: {
+				validator: function (v) {
+					return /^\+?\d{10,15}$/.test(v);
+				},
+				message: props => `${props.value} is not a valid phone number!`,
+			},
+		},
+		address: {
+			type: String,
+			required: true,
+			trim: true,
+		},
+		register_date: {
+			type: Date,
+			required: true,
+			default: Date.now,
 		},
 	},
-	{ versionKey: false }
+	{ versionKey: false, timestamps: true }
 );
 
-columnSchema.post('save', handleMongooseError);
-columnSchema.pre('findOneAndUpdate', addUpdateSettings);
-columnSchema.post('findOneAndUpdate', handleMongooseError);
-
-export const columnAddSchema = Joi.object({
-	name: Joi.string().required().messages({
-		message: `"missing required name field"`,
-	}),
-	boardId: Joi.string().required().messages({
-		message: `"missing required name field"`,
-	}),
-});
-
-export const columnUpdateSchema = Joi.object({
-	name: Joi.string(),
-	boardId: Joi.string(),
-});
-
-export const Columns = model('column', columnSchema);
+export const Customers = model('customer', customerSchema);

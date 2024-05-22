@@ -1,6 +1,6 @@
 /** @format */
 
-export * from './dashboard.js';
+export * from './incomeExpenses.js';
 export * from './user.js';
 export * from './products.js';
 export * from './customers.js';

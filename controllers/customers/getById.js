@@ -1,12 +1,10 @@
 /** @format */
 
-import { Columns } from '../../models/index.js';
+import { Customers } from '../../models/index.js';
 
 export const getById = async (req, res) => {
-	const { boardId } = req.params;
-	const { _id: owner } = req.user;
+	const { customerId } = req.params;
+	const dataCustomer = await Customers.find({ _id: customerId });
 
-	const result = await Columns.find({ boardId, owner });
-
-	res.json(result);
+	res.json(dataCustomer);
 };

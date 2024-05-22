@@ -1,7 +1,9 @@
 /** @format */
 
-export async function getSuppliers(req, res) {
-	const { _id } = req.user;
+import { Suppliers } from '../../models/index.js';
 
-	res.json({});
+export async function getSuppliers(req, res) {
+	const dataSuppliers = await Suppliers.find();
+
+	res.json(dataSuppliers);
 }

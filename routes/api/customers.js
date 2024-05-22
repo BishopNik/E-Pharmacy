@@ -12,6 +12,6 @@ customersRouter.use(authenticate);
 
 customersRouter.get('/', ctrlWrapper(getAll));
 
-customersRouter.get('/:supplierId', ctrlWrapper(getById));
+customersRouter.get('/:customerId', ctrlWrapper(getById));
 
 export default customersRouter;

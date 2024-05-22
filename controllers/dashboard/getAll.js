@@ -1,10 +1,19 @@
 /** @format */
 
-import { Boards } from '../../models/index.js';
+import { IncomeExpenses, Customers, Products, Suppliers } from '../../models/index.js';
 
 export const getAll = async (req, res) => {
-	const { _id: owner } = req.user;
+	const customersCount = await Customers.countDocuments();
+	const productCount = await Products.countDocuments();
+	const supplierCount = await Suppliers.countDocuments();
+	const dataIncomeExpenses = await IncomeExpenses.find();
+	const dataCustomers = await Customers.find();
 
-	const result = await Boards.find({ owner }).populate('owner', 'username');
-	res.json(result);
+	res.json({
+		totalProducts: productCount,
+		totalSuppliers: supplierCount,
+		totalCustomers: customersCount,
+		customers: dataCustomers,
+		income_expenses: dataIncomeExpenses,
+	});
 };

@@ -34,16 +34,16 @@ app.use('/api/users', usersRouter);
 app.use('/api/dashboard', dashboardRouter);
 
 // // Customers
-// app.use('/api/customers', customersRouter);
+app.use('/api/customers', customersRouter);
 
 // // Orders
 app.use('/api/orders', ordersRouter);
 
 // // Product
-// app.use('/api/products', productsRouter);
+app.use('/api/products', productsRouter);
 
 // // Suppliers
-// app.use('/api/suppliers', suppliersRouter);
+app.use('/api/suppliers', suppliersRouter);
 
 app.use((_req, res) => {
 	res.status(404).json({ message: 'Not found' });

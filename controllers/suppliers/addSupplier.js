@@ -1,7 +1,9 @@
 /** @format */
 
-export async function addSupplier(req, res) {
-	const { _id } = req.user;
+import { Suppliers } from '../../models/index.js';
 
-	res.json({});
+export async function addSupplier(req, res) {
+	const dataSupplier = await Suppliers.create({ ...req.body });
+
+	res.status(201).json(dataSupplier);
 }

@@ -1,11 +1,9 @@
 /** @format */
 
-import { Columns } from '../../models/index.js';
+import { Customers } from '../../models/index.js';
 
 export const getAll = async (req, res, next) => {
-	const { _id: owner } = req.user;
+	const dataCustomers = await Customers.find();
 
-	const result = await Columns.find({ owner }).populate('owner', 'username');
-
-	res.json(result);
+	res.json(dataCustomers);
 };
