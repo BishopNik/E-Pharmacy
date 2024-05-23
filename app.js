@@ -12,7 +12,7 @@ import ordersRouter from './routes/api/orders.js';
 import productsRouter from './routes/api/products.js';
 import suppliersRouter from './routes/api/suppliers.js';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json' assert { type: 'json' };
+import swaggerDocument from './swagger.json' with { type: 'json' };
 
 dotenv.config();
 
