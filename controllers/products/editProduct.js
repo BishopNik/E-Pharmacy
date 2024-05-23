@@ -2,10 +2,8 @@
 
 import { Products } from '../../models/index.js';
 
-export const editProduct = async (req, res) => {
-	const { productId } = req.params;
-
-	const product = await Products.findByIdAndUpdate({ _id: productId }, req.body, {
+export const editProduct = async ({ params: { productId }, body }, res) => {
+	const product = await Products.findByIdAndUpdate({ _id: productId }, body, {
 		new: true,
 	});
 

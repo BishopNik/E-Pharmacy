@@ -1,9 +1,8 @@
 /** @format */
 
 import { Customers } from '../../models/index.js';
+import { getDataSortFunc } from '../../utils/index.js';
 
-export const getAll = async (req, res, next) => {
-	const dataCustomers = await Customers.find();
-
-	res.json(dataCustomers);
+export const getAll = async ({ query }, res) => {
+	res.json(await getDataSortFunc(Customers, query));
 };

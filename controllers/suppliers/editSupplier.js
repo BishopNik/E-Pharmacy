@@ -2,10 +2,8 @@
 
 import { Suppliers } from '../../models/index.js';
 
-export async function editSupplier(req, res) {
-	const { supplierId } = req.params;
-
-	const dataSupplier = await Suppliers.findByIdAndUpdate({ _id: supplierId }, req.body, {
+export async function editSupplier({ params: { supplierId }, body }, res) {
+	const dataSupplier = await Suppliers.findByIdAndUpdate({ _id: supplierId }, body, {
 		new: true,
 	});
 

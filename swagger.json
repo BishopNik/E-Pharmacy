@@ -2,8 +2,8 @@
 	"openapi": "3.0.1",
 	"info": {
 		"version": "2.0.2",
-		"title": "Todos API",
-		"description": "The API for the Todos project"
+		"title": "E-Pharmacy API",
+		"description": "The API for the E-Pharmacy project"
 	},
 	"import": {
 		"type": "json"
@@ -12,127 +12,78 @@
 	"produces": ["application/json"],
 	"servers": [
 		{ "url": "http://localhost:4000/api" },
-		{ "url": "https://todos-api-i1vi.onrender.com/api" }
+		{ "url": "https://e-pharmacy-v77l.onrender.com/api" }
 	],
 	"tags": [
 		{
 			"name": "Auth",
-			"description": "Authorization endpoints"
+			"description": "Authorization"
 		},
 		{
-			"name": "Boards",
-			"description": "Boards array"
+			"name": "Dashboard",
+			"description": "Dashboard data"
 		},
 		{
-			"name": "Column",
-			"description": "Column array"
+			"name": "Customers",
+			"description": "Customers data"
 		},
 		{
-			"name": "Card",
-			"description": "Card array"
+			"name": "Orders",
+			"description": "Orders data"
 		},
 		{
-			"name": "Users",
-			"description": "Users array"
+			"name": "Products",
+			"description": "Products data"
+		},
+		{
+			"name": "Suppliers",
+			"description": "Suppliers data"
 		}
 	],
 
 	"paths": {
-		"/auth/register": {
-			"post": {
-				"tags": ["Auth"],
-				"summary": "User registration",
-				"parameters": [],
-				"security": [{ "Bearer": [] }],
-				"requestBody": {
-					"description": "Registration object",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/RegistrationInfo"
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "successfully registered",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"token": {
-											"type": "string"
-										},
-										"user": {
-											"type": "object",
-											"properties": {
-												"name": {
-													"type": "string"
-												},
-												"email": {
-													"type": "string"
-												},
-												"avatarURL": {
-													"type": "string"
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
-		"/auth/login": {
+		"/users/login": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "User login",
 				"parameters": [],
-				"security": [{ "Bearer": [] }],
 				"requestBody": {
 					"description": "login object",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LoginInfo"
+								"$ref": "#/components/schemas/Login"
 							}
 						}
 					}
 				},
 				"responses": {
 					"201": {
-						"description": "successfully registered",
+						"description": "successfully login",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "object",
 									"properties": {
 										"token": {
-											"type": "string"
+											"type": "string",
+											"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NGIzNWI2MDA4MGFkNWY1ZmViZDVhMiIsImlhdCI6MTcxNjM4NDg5MCwiZXhwIjoxNzE2NDI4MDkwfQ.dI4QYUK9onyX6k8nqQoMMIlIePXN5kZr4M5nigrBwng"
 										},
 										"user": {
 											"type": "object",
 											"properties": {
 												"id": {
-													"type": "string"
+													"type": "string",
+													"example": "65cb32121b768ed2b321e4ea"
 												},
 												"name": {
-													"type": "string"
+													"type": "string",
+													"example": "Eduard"
 												},
 												"email": {
-													"type": "string"
-												},
-												"avatarURL": {
-													"type": "string"
-												},
-												"thema": {
-													"type": "string"
+													"type": "string",
+													"example": "admin@gmail.com"
 												}
 											}
 										}
@@ -140,62 +91,77 @@
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
 					}
 				}
 			}
 		},
-		"/auth/logout": {
-			"post": {
+		"/users/logout": {
+			"get": {
 				"tags": ["Auth"],
 				"summary": "User logout",
 				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"204": {
-						"description": ""
+						"description": "No Content"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
 		},
-		"/auth/current": {
+		"/users/user-info": {
 			"get": {
 				"tags": ["Auth"],
-				"summary": "User current data",
+				"summary": "Get user info",
 				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"responses": {
-					"200": {
-						"description": "successfully registered",
+					"201": {
+						"description": "User info",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "object",
 									"properties": {
 										"id": {
-											"type": "string"
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
 										},
 										"name": {
-											"type": "string"
+											"type": "string",
+											"example": "Eduard"
 										},
 										"email": {
-											"type": "string"
-										},
-										"avatarURL": {
-											"type": "string"
+											"type": "string",
+											"example": "admin@gmail.com"
 										}
 									}
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
 		},
 
-		"/boards": {
+		"/dashboard": {
 			"get": {
-				"tags": ["Boards"],
-				"summary": "Get all user boards",
+				"tags": ["Dashboard"],
+				"summary": "Get all data",
 				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"responses": {
@@ -204,380 +170,174 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"_id": {
-												"type": "string",
-												"example": "65cb32121b768ed2b321e4ea"
-											},
-											"name": {
-												"type": "string",
-												"example": "pas"
-											},
-											"icon": {
-												"type": "string",
-												"example": "1"
-											},
-											"background": {
-												"type": "string",
-												"example": "4"
-											},
-											"owner": {
-												"type": "object",
-												"properties": {
-													"_id": {
-														"type": "string",
-														"example": "65c1588b623ec1693c4a6a1e"
-													}
+									"type": "object",
+									"properties": {
+										"totalProducts": {
+											"type": "string",
+											"example": "1200"
+										},
+										"totalSuppliers": {
+											"type": "string",
+											"example": "130"
+										},
+										"totalCustomers": {
+											"type": "string",
+											"example": "110"
+										},
+										"customers": {
+											"type": "array",
+											"properties": {
+												"_id": {
+													"type": "string",
+													"example": "664b2ea60080ad5f5febd495",
+													"description": "id"
+												},
+												"photo": {
+													"type": "string",
+													"example": "https://i.imgur.com/1As0akH.png1",
+													"description": "Url photo"
+												},
+												"name": {
+													"type": "string",
+													"example": "Nadia Ivanova",
+													"description": "Name of customer"
+												},
+												"email": {
+													"type": "string",
+													"example": "nadia.ivanova@gmail.com",
+													"description": "Email of customer"
+												},
+												"spent": {
+													"type": "string",
+													"example": "2,300.50",
+													"description": "Spent"
+												},
+												"phone": {
+													"type": "string",
+													"example": "+380707614324",
+													"description": "Phone of customer"
+												},
+												"address": {
+													"type": "string",
+													"example": "Obolon, Bldg. 10, Apt. 45",
+													"description": "Address of customer"
+												},
+												"register_date": {
+													"type": "string",
+													"example": "Mar 1, 2024",
+													"description": "Register date of customer"
 												}
-											}
+											},
+											"example": [
+												{
+													"_id:": "664b2ea60080ad5f5febd495",
+													"photo": "https://i.imgur.com/1As0akH.png1",
+													"name": "Nadia Ivanova",
+													"email": "nadia.ivanova@gmail.com",
+													"spent": "2,300.50",
+													"phone": "+380707614324",
+													"address": "Obolon, Bldg. 10, Apt. 45",
+													"register_date": "Mar 1, 2024"
+												}
+											]
 										},
-										"required": ["_id", "name", "icon", "background", "owner"]
+										"income_expenses": {
+											"type": "array",
+											"properties": {
+												"_id": {
+													"type": "string",
+													"example": "664b2ea60080ad5f5febd495",
+													"description": "id"
+												},
+												"name": {
+													"type": "string",
+													"example": "Market Cap Ltd",
+													"description": "Name"
+												},
+												"amount": {
+													"type": "string",
+													"example": "+1,200.88",
+													"description": "Amount"
+												},
+												"type": {
+													"type": "string",
+													"example": "Income",
+													"description": "Type"
+												}
+											},
+											"example": [
+												{
+													"_id:": "664b2ea60080ad5f5febd495",
+													"name": "Market Cap Ltd",
+													"amount": "+1,200.88",
+													"type": "Income"
+												}
+											]
+										}
 									}
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
 					}
 				}
-			},
-			"post": {
-				"tags": ["Boards"],
-				"summary": "Create a new board",
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/BoardsPost"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Board created successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "pavlo"
-										},
-										"icon": {
-											"type": "string",
-											"example": "1"
-										},
-										"background": {
-											"type": "string",
-											"example": "4"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e",
-											"description": "Owner's user ID"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94",
-											"description": "Board ID"
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			}
-		},
-		"/boards/{boardId}": {
-			"get": {
-				"tags": ["Boards"],
-				"summary": "Get a single board by ID",
-				"parameters": [
-					{
-						"name": "boardId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"description": "The ID of the board to retrieve"
-					}
-				],
-				"security": [{ "Bearer": [] }],
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"_id": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"name": {
-											"type": "string",
-											"example": "pas"
-										},
-										"icon": {
-											"type": "string",
-											"example": "1"
-										},
-										"background": {
-											"type": "string",
-											"example": "4"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e"
-										}
-									},
-									"required": ["_id", "name", "icon", "background", "owner"]
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "_id is not valid id"
-					}
-				}
-			},
-			"patch": {
-				"tags": ["Boards"],
-				"summary": "Update board information",
-				"parameters": [
-					{
-						"name": "boardId",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"description": "The ID of the board to be updated"
-					}
-				],
-				"requestBody": {
-					"required": false,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/BoardsPatch"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Board updated successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94"
-										},
-										"name": {
-											"type": "string",
-											"example": "Zor"
-										},
-										"icon": {
-											"type": "string",
-											"example": "4"
-										},
-										"background": {
-											"type": "string",
-											"example": "4"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e"
-										}
-									}
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "_Id is not valid id"
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			},
-			"delete": {
-				"tags": ["Boards"],
-				"summary": "Delete a board",
-				"parameters": [
-					{
-						"name": "boardId",
-						"in": "path",
-						"required": true,
-						"description": "The ID of the board to delete",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Board deleted successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "Zor"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94"
-										}
-									}
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "_Id is not valid id"
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
 			}
 		},
 
-		"/column": {
+		"/customers": {
 			"get": {
-				"tags": ["Column"],
-				"summary": "Get all user column",
-				"parameters": [],
-				"security": [{ "Bearer": [] }],
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"_id": {
-												"type": "string",
-												"example": "65cb32121b768ed2b321e4ea"
-											},
-											"name": {
-												"type": "string",
-												"example": "pas"
-											},
-											"boarderId": {
-												"type": "string",
-												"example": "65cb32121b768ed2b321e4ea"
-											},
-											"owner": {
-												"type": "object",
-												"properties": {
-													"_id": {
-														"type": "string",
-														"example": "65c1588b623ec1693c4a6a1e"
-													}
-												}
-											}
-										},
-										"required": ["_id", "name", "boarderId", "owner"]
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			"post": {
-				"tags": ["Column"],
-				"summary": "Create a new column",
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ColumnPost"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Column created successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "pavlo"
-										},
-										"boarderId": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e",
-											"description": "Owner's user ID"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94",
-											"description": "Board ID"
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			}
-		},
-		"/column/{boardId}": {
-			"get": {
-				"tags": ["Column"],
-				"summary": "Get a column by boardId",
+				"tags": ["Customers"],
+				"summary": "Get all customers",
 				"parameters": [
 					{
-						"name": "boardId",
-						"in": "path",
-						"required": true,
+						"name": "sortBy",
+						"in": "query",
+						"description": "Field to sort by",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"default": "name"
+						}
+					},
+					{
+						"name": "reverse",
+						"in": "query",
+						"description": "Sort direction (0 for ascending, 1 for descending)",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1],
+							"default": 0
+						}
+					},
+					{
+						"name": "nameCustomer",
+						"in": "query",
+						"description": "Filter customers by name",
+						"required": false,
 						"schema": {
 							"type": "string"
-						},
-						"description": "The ID of the board"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "Current page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "perPage",
+						"in": "query",
+						"description": "Count items in page ",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"security": [{ "Bearer": [] }],
@@ -587,26 +347,146 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
+									"type": "array",
 									"properties": {
 										"_id": {
 											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
+											"example": "664b2ea60080ad5f5febd495",
+											"description": "id"
+										},
+										"photo": {
+											"type": "string",
+											"example": "https://i.imgur.com/1As0akH.png1",
+											"description": "Url photo"
 										},
 										"name": {
 											"type": "string",
-											"example": "pas"
+											"example": "Nadia Ivanova",
+											"description": "Name of customer"
 										},
-										"boarderId": {
+										"email": {
 											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
+											"example": "nadia.ivanova@gmail.com",
+											"description": "Email of customer"
 										},
-										"owner": {
+										"spent": {
 											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e"
+											"example": "2,300.50",
+											"description": "Spent"
+										},
+										"phone": {
+											"type": "string",
+											"example": "+380707614324",
+											"description": "Phone of customer"
+										},
+										"address": {
+											"type": "string",
+											"example": "Obolon, Bldg. 10, Apt. 45",
+											"description": "Address of customer"
+										},
+										"register_date": {
+											"type": "string",
+											"example": "Mar 1, 2024",
+											"description": "Register date of customer"
+										}
+									}
+								},
+								"example": [
+									{
+										"_id:": "664b2ea60080ad5f5febd495",
+										"photo": "https://i.imgur.com/1As0akH.png1",
+										"name": "Nadia Ivanova",
+										"email": "nadia.ivanova@gmail.com",
+										"spent": "2,300.50",
+										"phone": "+380707614324",
+										"address": "Obolon, Bldg. 10, Apt. 45",
+										"register_date": "Mar 1, 2024"
+									}
+								]
+							}
+						}
+					}
+				},
+				"401": {
+					"description": "Unauthorized"
+				}
+			},
+			"/customers/{customerId}": {
+				"get": {
+					"tags": ["Customers"],
+					"summary": "Get a customer by id",
+					"parameters": [
+						{
+							"name": "customerId",
+							"in": "path",
+							"required": true,
+							"schema": {
+								"type": "string"
+							},
+							"description": "The ID of the customer"
+						}
+					],
+					"security": [{ "Bearer": [] }],
+					"responses": {
+						"200": {
+							"description": "OK",
+							"content": {
+								"application/json": {
+									"schema": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string",
+												"example": "664b2ea60080ad5f5febd495",
+												"description": "id"
+											},
+											"photo": {
+												"type": "string",
+												"example": "https://i.imgur.com/1As0akH.png1",
+												"description": "Url photo"
+											},
+											"name": {
+												"type": "string",
+												"example": "Nadia Ivanova",
+												"description": "Name of customer"
+											},
+											"email": {
+												"type": "string",
+												"example": "nadia.ivanova@gmail.com",
+												"description": "Email of customer"
+											},
+											"spent": {
+												"type": "string",
+												"example": "2,300.50",
+												"description": "Spent"
+											},
+											"phone": {
+												"type": "string",
+												"example": "+380707614324",
+												"description": "Phone of customer"
+											},
+											"address": {
+												"type": "string",
+												"example": "Obolon, Bldg. 10, Apt. 45",
+												"description": "Address of customer"
+											},
+											"register_date": {
+												"type": "string",
+												"example": "Mar 1, 2024",
+												"description": "Register date of customer"
+											}
 										}
 									},
-									"required": ["_id", "name", "boarderId", "owner"]
+									"example": {
+										"_id:": "664b2ea60080ad5f5febd495",
+										"photo": "https://i.imgur.com/1As0akH.png1",
+										"name": "Nadia Ivanova",
+										"email": "nadia.ivanova@gmail.com",
+										"spent": "2,300.50",
+										"phone": "+380707614324",
+										"address": "Obolon, Bldg. 10, Apt. 45",
+										"register_date": "Mar 1, 2024"
+									}
 								}
 							}
 						}
@@ -617,34 +497,25 @@
 				}
 			}
 		},
-		"/column/{columnId}": {
-			"patch": {
-				"tags": ["Column"],
-				"summary": "Update column information",
+		"/customers/{customerId}": {
+			"get": {
+				"tags": ["Customers"],
+				"summary": "Get a customer by id",
 				"parameters": [
 					{
-						"name": "columnId",
+						"name": "customerId",
 						"in": "path",
 						"required": true,
 						"schema": {
 							"type": "string"
 						},
-						"description": "The ID of the column to be updated"
+						"description": "The ID of the customer"
 					}
 				],
-				"requestBody": {
-					"required": false,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ColumnPatch"
-							}
-						}
-					}
-				},
+				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "column updated successfully",
+						"description": "OK",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -652,87 +523,120 @@
 									"properties": {
 										"_id": {
 											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94"
+											"example": "664b2ea60080ad5f5febd495",
+											"description": "id"
+										},
+										"photo": {
+											"type": "string",
+											"example": "https://i.imgur.com/1As0akH.png1",
+											"description": "Url photo"
 										},
 										"name": {
 											"type": "string",
-											"example": "Zor"
+											"example": "Nadia Ivanova",
+											"description": "Name of customer"
 										},
-										"boarderId": {
+										"email": {
 											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
+											"example": "nadia.ivanova@gmail.com",
+											"description": "Email of customer"
 										},
-										"owner": {
+										"spent": {
 											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e"
+											"example": "2,300.50",
+											"description": "Spent"
+										},
+										"phone": {
+											"type": "string",
+											"example": "+380707614324",
+											"description": "Phone of customer"
+										},
+										"address": {
+											"type": "string",
+											"example": "Obolon, Bldg. 10, Apt. 45",
+											"description": "Address of customer"
+										},
+										"register_date": {
+											"type": "string",
+											"example": "Mar 1, 2024",
+											"description": "Register date of customer"
 										}
 									}
+								},
+								"example": {
+									"_id:": "664b2ea60080ad5f5febd495",
+									"photo": "https://i.imgur.com/1As0akH.png1",
+									"name": "Nadia Ivanova",
+									"email": "nadia.ivanova@gmail.com",
+									"spent": "2,300.50",
+									"phone": "+380707614324",
+									"address": "Obolon, Bldg. 10, Apt. 45",
+									"register_date": "Mar 1, 2024"
 								}
 							}
 						}
-					},
-					"400": {
-						"description": "_Id is not valid id"
 					}
 				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			},
-			"delete": {
-				"tags": ["Column"],
-				"summary": "Delete a column",
+				"400": {
+					"description": "_id is not valid id"
+				}
+			}
+		},
+
+		"/orders": {
+			"get": {
+				"tags": ["Orders"],
+				"summary": "Get all orders",
 				"parameters": [
 					{
-						"name": "columnId",
-						"in": "path",
-						"required": true,
-						"description": "The ID of the column to delete",
+						"name": "sortBy",
+						"in": "query",
+						"description": "Field to sort by",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"default": "name"
+						}
+					},
+					{
+						"name": "reverse",
+						"in": "query",
+						"description": "Sort direction (0 for ascending, 1 for descending)",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1],
+							"default": 0
+						}
+					},
+					{
+						"name": "nameOrder",
+						"in": "query",
+						"description": "Filter orders by name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "Current page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "perPage",
+						"in": "query",
+						"description": "Count items in page ",
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
 					}
 				],
-				"responses": {
-					"200": {
-						"description": "Column deleted successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "Zor"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94"
-										}
-									}
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "_Id is not valid id"
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			}
-		},
-
-		"/card": {
-			"get": {
-				"tags": ["Card"],
-				"summary": "Get all user card",
-				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
@@ -792,23 +696,96 @@
 						}
 					}
 				}
+			}
+		},
+
+		"/products": {
+			"get": {
+				"tags": ["Products"],
+				"summary": "Get all products",
+				"parameters": [
+					{
+						"name": "sortBy",
+						"in": "query",
+						"description": "Field to sort by",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"default": "name"
+						}
+					},
+					{
+						"name": "reverse",
+						"in": "query",
+						"description": "Sort direction (0 for ascending, 1 for descending)",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1],
+							"default": 0
+						}
+					},
+					{
+						"name": "nameProduct",
+						"in": "query",
+						"description": "Filter products by name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "Current page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "perPage",
+						"in": "query",
+						"description": "Count items in page ",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "A list of products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Product"
+									}
+								}
+							}
+						}
+					}
+				}
 			},
 			"post": {
-				"tags": ["Card"],
-				"summary": "Create a new card",
+				"tags": ["Products"],
+				"summary": "Create a new product",
 				"requestBody": {
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/CardPost"
+								"$ref": "#/components/schemas/Product"
 							}
 						}
 					}
 				},
 				"responses": {
 					"200": {
-						"description": "Card created successfully",
+						"description": "Product created successfully",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -818,20 +795,9 @@
 											"type": "string",
 											"example": "pavlo"
 										},
-										"text": {
+										"boarderId": {
 											"type": "string",
-											"example": "go to"
-										},
-										"deadline": {
-											"type": "Number"
-										},
-										"priority": {
-											"type": "string",
-											"example": "without"
-										},
-										"columnId": {
-											"type": "string",
-											"example": "65cb76b2554c359c6c79b7cb"
+											"example": "65cb32121b768ed2b321e4ea"
 										},
 										"owner": {
 											"type": "string",
@@ -851,24 +817,24 @@
 				},
 				"security": [
 					{
-						"BearerAuth": []
+						"Bearer": []
 					}
 				]
 			}
 		},
-		"/card/{columnId}": {
-			"get": {
-				"tags": ["Card"],
-				"summary": "Get a card by columnId",
+		"/products/{productId}": {
+			"put": {
+				"tags": ["Products"],
+				"summary": "Edit product by id",
 				"parameters": [
 					{
-						"name": "columnId",
+						"name": "productId",
 						"in": "path",
 						"required": true,
 						"schema": {
 							"type": "string"
 						},
-						"description": "The ID of the board"
+						"description": "The ID of the product"
 					}
 				],
 				"security": [{ "Bearer": [] }],
@@ -888,34 +854,16 @@
 											"type": "string",
 											"example": "pas"
 										},
-										"text": {
+										"boarderId": {
 											"type": "string",
-											"example": "go to"
-										},
-										"deadline": {
-											"type": "Number"
-										},
-										"priority": {
-											"type": "string",
-											"example": "without"
-										},
-										"columnId": {
-											"type": "string",
-											"example": "65cb76b2554c359c6c79b7cb"
+											"example": "65cb32121b768ed2b321e4ea"
 										},
 										"owner": {
 											"type": "string",
 											"example": "65c1588b623ec1693c4a6a1e"
 										}
 									},
-									"required": [
-										"_id",
-										"name",
-										"columnId",
-										"priority",
-										"text",
-										"owner"
-									]
+									"required": ["_id", "name", "boarderId", "owner"]
 								}
 							}
 						}
@@ -926,34 +874,173 @@
 				}
 			}
 		},
-		"/card/{cardId}": {
-			"patch": {
-				"tags": ["Card"],
-				"summary": "Update card information",
+
+		"/suppliers": {
+			"get": {
+				"tags": ["Suppliers"],
+				"summary": "Get all user suppliers",
 				"parameters": [
 					{
-						"name": "cardId",
+						"name": "sortBy",
+						"in": "query",
+						"description": "Field to sort by",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"default": "name"
+						}
+					},
+					{
+						"name": "reverse",
+						"in": "query",
+						"description": "Sort direction (0 for ascending, 1 for descending)",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"enum": [0, 1],
+							"default": 0
+						}
+					},
+					{
+						"name": "nameSupplier",
+						"in": "query",
+						"description": "Filter suppliers by name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "Current page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "perPage",
+						"in": "query",
+						"description": "Count items in page ",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string",
+												"example": "65cb32121b768ed2b321e4ea"
+											},
+											"name": {
+												"type": "string",
+												"example": "pas"
+											},
+											"boarderId": {
+												"type": "string",
+												"example": "65cb32121b768ed2b321e4ea"
+											},
+											"owner": {
+												"type": "object",
+												"properties": {
+													"_id": {
+														"type": "string",
+														"example": "65c1588b623ec1693c4a6a1e"
+													}
+												}
+											}
+										},
+										"required": ["_id", "name", "boarderId", "owner"]
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Suppliers"],
+				"summary": "Create a new supplier",
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ColumnPost"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Supplier created successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "pavlo"
+										},
+										"boarderId": {
+											"type": "string",
+											"example": "65cb32121b768ed2b321e4ea"
+										},
+										"owner": {
+											"type": "string",
+											"example": "65c1588b623ec1693c4a6a1e",
+											"description": "Owner's user ID"
+										},
+										"_id": {
+											"type": "string",
+											"example": "65cb65e681cdb00ebc7fac94",
+											"description": "Board ID"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/suppliers/{supplierId}": {
+			"put": {
+				"tags": ["Suppliers"],
+				"summary": "Get a supplier by supplierId",
+				"parameters": [
+					{
+						"name": "supplierId",
 						"in": "path",
 						"required": true,
 						"schema": {
 							"type": "string"
 						},
-						"description": "The ID of the card to be updated"
+						"description": "The ID of the supplier"
 					}
 				],
-				"requestBody": {
-					"required": false,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CardPatch"
-							}
-						}
-					}
-				},
+				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "card updated successfully",
+						"description": "OK",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -961,391 +1048,246 @@
 									"properties": {
 										"_id": {
 											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94"
+											"example": "65cb32121b768ed2b321e4ea"
 										},
 										"name": {
 											"type": "string",
-											"example": "Zor"
+											"example": "pas"
 										},
-										"text": {
+										"boarderId": {
 											"type": "string",
-											"example": "go to"
-										},
-										"deadline": {
-											"type": "Number"
-										},
-										"priority": {
-											"type": "string",
-											"example": "without"
-										},
-										"columnId": {
-											"type": "string",
-											"example": "65cb76b2554c359c6c79b7cb"
+											"example": "65cb32121b768ed2b321e4ea"
 										},
 										"owner": {
 											"type": "string",
 											"example": "65c1588b623ec1693c4a6a1e"
 										}
-									}
+									},
+									"required": ["_id", "name", "boarderId", "owner"]
 								}
 							}
 						}
 					},
 					"400": {
-						"description": "_Id is not valid id"
+						"description": "_id is not valid id"
 					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			},
-			"delete": {
-				"tags": ["Card"],
-				"summary": "Delete a card",
-				"parameters": [
-					{
-						"name": "cardId",
-						"in": "path",
-						"required": true,
-						"description": "The ID of the card to delete",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "Card deleted successfully",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "Zor"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94"
-										}
-									}
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "_Id is not valid id"
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			}
-		},
-
-		"/user/update-user": {
-			"patch": {
-				"tags": ["Users"],
-				"summary": "Update user information",
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"name": {
-										"type": "string",
-										"example": "Pavlo"
-									},
-									"email": {
-										"type": "string",
-										"pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
-										"example": "savyukpavlo12@gmail.com"
-									},
-									"password": {
-										"type": "string",
-										"minLength": 6,
-										"example": "123456"
-									}
-								},
-								"minProperties": 1
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"token": {
-											"type": "string",
-											"example": ""
-										},
-										"user": {
-											"type": "object",
-											"properties": {
-												"_id": {
-													"type": "string",
-													"example": "65c1588b623ec1693c4a6a1e"
-												},
-												"name": {
-													"type": "string",
-													"example": "Ivan"
-												},
-												"avatarURL": {
-													"type": "string",
-													"example": ""
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
-			}
-		},
-		"/users/thema": {
-			"patch": {
-				"tags": ["Users"],
-				"summary": "Update user theme",
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"properties": {
-									"thema": {
-										"type": "string",
-										"enum": ["Light", "Violet", "Dark"],
-										"example": "Violet",
-										"description": "User's preferred theme"
-									}
-								},
-								"required": ["thema"]
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "OK",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "object",
-									"properties": {
-										"user": {
-											"type": "object",
-											"properties": {
-												"_id": {
-													"type": "string",
-													"example": "65c1588b623ec1693c4a6a1e"
-												},
-												"name": {
-													"type": "string",
-													"example": "John Doe"
-												},
-												"email": {
-													"type": "string",
-													"example": "johndoe@example.com"
-												},
-												"thema": {
-													"type": "string",
-													"example": "Violet",
-													"enum": ["Light", "Violet", "Dark"]
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"BearerAuth": []
-					}
-				]
+				}
 			}
 		}
 	},
 	"components": {
 		"schemas": {
-			"RegistrationInfo": {
-				"type": "object",
-				"properties": {
-					"name": {
-						"type": "string",
-						"example": "Pavlo"
-					},
-					"email": {
-						"type": "string",
-						"example": "savyukpavlo12@gmail.com"
-					},
-					"password": {
-						"type": "string",
-						"example": "123456"
-					}
-				}
-			},
-			"LoginInfo": {
+			"Login": {
 				"type": "object",
 				"properties": {
 					"email": {
 						"type": "string",
-						"example": "savyukpavlo12@gmail.com"
+						"example": "qq@qq.qq"
 					},
 					"password": {
 						"type": "string",
-						"example": "123456"
+						"example": "Aqwerty"
 					}
 				}
 			},
-			"BoardsPost": {
+			"Customer": {
 				"type": "object",
 				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "664b2ea60080ad5f5febd495",
+						"description": "id"
+					},
+					"photo": {
+						"type": "string",
+						"example": "https://i.imgur.com/1As0akH.png1",
+						"description": "Url photo"
+					},
 					"name": {
 						"type": "string",
-						"example": "pavlo",
-						"description": "Name of the board"
+						"example": "Nadia Ivanova",
+						"description": "Name of customer"
 					},
-					"icon": {
+					"email": {
 						"type": "string",
-						"example": "1",
-						"description": "Icon identifier for the board",
-						"minLength": 0,
-						"maxLength": 7
+						"example": "nadia.ivanova@gmail.com",
+						"description": "Email of customer"
 					},
-					"background": {
+					"spent": {
+						"type": "number",
+						"example": "2,300.50",
+						"description": "Spent"
+					},
+					"phone": {
 						"type": "string",
-						"example": "4",
-						"description": "Background identifier for the board",
-						"minLength": 0,
-						"maxLength": 14
+						"example": "+380707614324",
+						"description": "Phone of customer"
+					},
+					"address": {
+						"type": "string",
+						"example": "Obolon, Bldg. 10, Apt. 45",
+						"description": "Address of customer"
+					},
+					"register_date": {
+						"type": "string",
+						"example": "Mar 1, 2024",
+						"description": "Register date of customer"
 					}
-				},
-				"required": ["name", "icon", "background"]
+				}
 			},
-			"BoardsPatch": {
+			"Order": {
 				"type": "object",
 				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "664b2ea60080ad5f5febd495",
+						"description": "id"
+					},
+					"photo": {
+						"type": "string",
+						"example": "https://i.imgur.com/1As0akH.png1",
+						"description": "Url photo"
+					},
 					"name": {
-						"type": "string"
-					},
-					"icon": {
 						"type": "string",
-						"minLength": 0,
-						"maxLength": 7
+						"example": "Taras Shevchenko",
+						"description": "Name of client"
 					},
-					"background": {
+					"address": {
 						"type": "string",
-						"minLength": 0,
-						"maxLength": 14
+						"example": "Khreshchatyk, Bldg. 51, Apt. 137",
+						"description": "Address of client"
+					},
+					"products": {
+						"type": "number",
+						"example": "12",
+						"description": "Quantity products"
+					},
+					"price": {
+						"type": "number",
+						"example": "145",
+						"description": "Price"
+					},
+					"status": {
+						"type": "string",
+						"example": "Complected",
+						"description": "Status order"
+					},
+					"order_date": {
+						"type": "string",
+						"example": "July 31, 2023",
+						"description": "Order date"
 					}
-				},
-				"minProperties": 1
+				}
 			},
-			"ColumnPost": {
+			"Product": {
 				"type": "object",
 				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "664b2ea60080ad5f5febd495",
+						"description": "id"
+					},
+					"photo": {
+						"type": "string",
+						"example": "https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg",
+						"description": "Url photo"
+					},
 					"name": {
 						"type": "string",
-						"example": "pavlo",
-						"description": "Name of the Column"
+						"example": "Aspirin",
+						"description": "Name of product"
 					},
-					"boarderId": {
+					"suppliers": {
 						"type": "string",
-						"example": "65cb32121b768ed2b321e4ea",
-						"description": "board id"
+						"example": "Square",
+						"description": "Suppliers"
+					},
+					"stock": {
+						"type": "number",
+						"example": "12",
+						"description": "Quantity in stock"
+					},
+					"price": {
+						"type": "number",
+						"example": "145",
+						"description": "Price"
+					},
+					"category": {
+						"type": "string",
+						"example": "Medicine",
+						"description": "Category"
 					}
-				},
-				"required": ["name", "background"]
+				}
 			},
-			"ColumnPatch": {
+			"Supplier": {
 				"type": "object",
 				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"boarderId": {
+					"_id": {
 						"type": "string",
-						"example": "65cb32121b768ed2b321e4ea"
+						"example": "664b2ea60080ad5f5febd495",
+						"description": "id"
+					},
+					"name": {
+						"type": "string",
+						"example": "Aspirin",
+						"description": "Name of product"
+					},
+					"address": {
+						"type": "string",
+						"example": "Obolon, Bldg. 10, Apt. 45",
+						"description": "Address of supplier"
+					},
+					"suppliers": {
+						"type": "string",
+						"example": "Square",
+						"description": "Suppliers"
+					},
+					"date": {
+						"type": "string",
+						"example": "Mar 1, 2024",
+						"description": "Date of supplier"
+					},
+					"amount": {
+						"type": "number",
+						"example": "6952.53",
+						"description": "Amount"
+					},
+					"status": {
+						"type": "string",
+						"example": "Active",
+						"description": "Status"
 					}
-				},
-				"minProperties": 1
+				}
 			},
-			"CardPost": {
+			"Income-expense": {
 				"type": "object",
 				"properties": {
+					"_id": {
+						"type": "string",
+						"example": "664b2ea60080ad5f5febd495",
+						"description": "id"
+					},
 					"name": {
 						"type": "string",
-						"example": "pavlo",
-						"description": "Name of the Column"
+						"example": "Market Cap Ltd",
+						"description": "Name"
 					},
-					"text": {
+					"amount": {
+						"type": "number",
+						"example": "+1,200.88",
+						"description": "Amount"
+					},
+					"type": {
 						"type": "string",
-						"example": "go to"
-					},
-					"deadline": {
-						"type": "Number"
-					},
-					"priority": {
-						"type": "string",
-						"example": "without"
-					},
-					"columnId": {
-						"type": "string",
-						"example": "65cb76b2554c359c6c79b7cb"
+						"example": "Income",
+						"description": "Type"
 					}
-				},
-				"required": ["name", "columnId", "priority", "text"]
-			},
-			"CardPatch": {
-				"type": "object",
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"text": {
-						"type": "string",
-						"example": "go to"
-					},
-					"deadline": {
-						"type": "Number"
-					},
-					"priority": {
-						"type": "string",
-						"example": "without"
-					},
-					"columnId": {
-						"type": "string",
-						"example": "65cb76b2554c359c6c79b7cb"
-					}
-				},
-				"minProperties": 1
+				}
 			}
 		},
 		"securitySchemes": {
-			"BearerAuth": {
+			"Bearer": {
 				"type": "http",
 				"scheme": "bearer",
 				"bearerFormat": "JWT",
@@ -1353,7 +1295,13 @@
 			}
 		}
 	},
+	"securityDefinitions": {
+		"Bearer": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	},
 	"host": "virtserver.swaggerhub.com",
-	"basePath": "/SAVYUKPAVLO8/Todos/1.0.0",
 	"schemes": ["https"]
 }

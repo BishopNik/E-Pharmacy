@@ -2,10 +2,9 @@
 
 import { Products } from '../../models/index.js';
 
-export const delProduct = async (req, res) => {
-	const { productId } = req.params;
+export const delProduct = async ({ params: { productId } }, res) => {
+	const product = await Products.findByIdAndDelete({ _id: productId });
 
-	const product = await Products.findByIdAndDelete({ _id: productId, owner });
 	if (!product) {
 		throw httpError(404, `Product with id=${productId} not found`);
 	}
