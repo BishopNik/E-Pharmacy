@@ -43,7 +43,7 @@ const supplierSchema = new Schema(
 			enum: status,
 		},
 	},
-	{ timestamps: true }
+	{ versionKey: false, timestamps: true }
 );
 
 export const Suppliers = model('supplier', supplierSchema);

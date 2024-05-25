@@ -124,7 +124,7 @@
 				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"responses": {
-					"201": {
+					"200": {
 						"description": "User info",
 						"content": {
 							"application/json": {
@@ -166,110 +166,52 @@
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Data fetching successfil",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "object",
 									"properties": {
 										"totalProducts": {
-											"type": "string",
-											"example": "1200"
+											"type": "integer",
+											"example": 1200
 										},
 										"totalSuppliers": {
-											"type": "string",
-											"example": "130"
+											"type": "integer",
+											"example": 130
 										},
 										"totalCustomers": {
-											"type": "string",
-											"example": "110"
+											"type": "integer",
+											"example": 110
 										},
 										"customers": {
 											"type": "array",
-											"properties": {
-												"_id": {
-													"type": "string",
-													"example": "664b2ea60080ad5f5febd495",
-													"description": "id"
-												},
-												"photo": {
-													"type": "string",
-													"example": "https://i.imgur.com/1As0akH.png1",
-													"description": "Url photo"
-												},
-												"name": {
-													"type": "string",
-													"example": "Nadia Ivanova",
-													"description": "Name of customer"
-												},
-												"email": {
-													"type": "string",
-													"example": "nadia.ivanova@gmail.com",
-													"description": "Email of customer"
-												},
-												"spent": {
-													"type": "string",
-													"example": "2,300.50",
-													"description": "Spent"
-												},
-												"phone": {
-													"type": "string",
-													"example": "+380707614324",
-													"description": "Phone of customer"
-												},
-												"address": {
-													"type": "string",
-													"example": "Obolon, Bldg. 10, Apt. 45",
-													"description": "Address of customer"
-												},
-												"register_date": {
-													"type": "string",
-													"example": "Mar 1, 2024",
-													"description": "Register date of customer"
-												}
+											"items": {
+												"$ref": "#/components/schemas/Customer"
 											},
 											"example": [
 												{
-													"_id:": "664b2ea60080ad5f5febd495",
+													"_id": "664b2ea60080ad5f5febd495",
 													"photo": "https://i.imgur.com/1As0akH.png1",
 													"name": "Nadia Ivanova",
 													"email": "nadia.ivanova@gmail.com",
-													"spent": "2,300.50",
+													"spent": 2300.5,
 													"phone": "+380707614324",
 													"address": "Obolon, Bldg. 10, Apt. 45",
-													"register_date": "Mar 1, 2024"
+													"register_date": "2024-03-18T23:00:00.000Z"
 												}
 											]
 										},
 										"income_expenses": {
 											"type": "array",
-											"properties": {
-												"_id": {
-													"type": "string",
-													"example": "664b2ea60080ad5f5febd495",
-													"description": "id"
-												},
-												"name": {
-													"type": "string",
-													"example": "Market Cap Ltd",
-													"description": "Name"
-												},
-												"amount": {
-													"type": "string",
-													"example": "+1,200.88",
-													"description": "Amount"
-												},
-												"type": {
-													"type": "string",
-													"example": "Income",
-													"description": "Type"
-												}
+											"items": {
+												"$ref": "#/components/schemas/Income-expense"
 											},
 											"example": [
 												{
-													"_id:": "664b2ea60080ad5f5febd495",
+													"_id": "664b2ea60080ad5f5febd495",
 													"name": "Market Cap Ltd",
-													"amount": "+1,200.88",
+													"amount": 1200.88,
 													"type": "Income"
 												}
 											]
@@ -281,6 +223,9 @@
 					},
 					"401": {
 						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
@@ -313,7 +258,7 @@
 						}
 					},
 					{
-						"name": "nameCustomer",
+						"name": "searchName",
 						"in": "query",
 						"description": "Filter customers by name",
 						"required": false,
@@ -343,156 +288,54 @@
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Data customers fetching successful",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
+									"type": "object",
 									"properties": {
-										"_id": {
-											"type": "string",
-											"example": "664b2ea60080ad5f5febd495",
-											"description": "id"
+										"totalPage": {
+											"type": "integer",
+											"example": 1,
+											"description": "Total number of pages"
 										},
-										"photo": {
-											"type": "string",
-											"example": "https://i.imgur.com/1As0akH.png1",
-											"description": "Url photo"
+										"currentPage": {
+											"type": "integer",
+											"example": 1,
+											"description": "Current page number"
 										},
-										"name": {
-											"type": "string",
-											"example": "Nadia Ivanova",
-											"description": "Name of customer"
-										},
-										"email": {
-											"type": "string",
-											"example": "nadia.ivanova@gmail.com",
-											"description": "Email of customer"
-										},
-										"spent": {
-											"type": "string",
-											"example": "2,300.50",
-											"description": "Spent"
-										},
-										"phone": {
-											"type": "string",
-											"example": "+380707614324",
-											"description": "Phone of customer"
-										},
-										"address": {
-											"type": "string",
-											"example": "Obolon, Bldg. 10, Apt. 45",
-											"description": "Address of customer"
-										},
-										"register_date": {
-											"type": "string",
-											"example": "Mar 1, 2024",
-											"description": "Register date of customer"
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Customer"
+											}
 										}
 									}
 								},
-								"example": [
-									{
-										"_id:": "664b2ea60080ad5f5febd495",
-										"photo": "https://i.imgur.com/1As0akH.png1",
-										"name": "Nadia Ivanova",
-										"email": "nadia.ivanova@gmail.com",
-										"spent": "2,300.50",
-										"phone": "+380707614324",
-										"address": "Obolon, Bldg. 10, Apt. 45",
-										"register_date": "Mar 1, 2024"
-									}
-								]
-							}
-						}
-					}
-				},
-				"401": {
-					"description": "Unauthorized"
-				}
-			},
-			"/customers/{customerId}": {
-				"get": {
-					"tags": ["Customers"],
-					"summary": "Get a customer by id",
-					"parameters": [
-						{
-							"name": "customerId",
-							"in": "path",
-							"required": true,
-							"schema": {
-								"type": "string"
-							},
-							"description": "The ID of the customer"
-						}
-					],
-					"security": [{ "Bearer": [] }],
-					"responses": {
-						"200": {
-							"description": "OK",
-							"content": {
-								"application/json": {
-									"schema": {
-										"type": "object",
-										"properties": {
-											"_id": {
-												"type": "string",
-												"example": "664b2ea60080ad5f5febd495",
-												"description": "id"
-											},
-											"photo": {
-												"type": "string",
-												"example": "https://i.imgur.com/1As0akH.png1",
-												"description": "Url photo"
-											},
-											"name": {
-												"type": "string",
-												"example": "Nadia Ivanova",
-												"description": "Name of customer"
-											},
-											"email": {
-												"type": "string",
-												"example": "nadia.ivanova@gmail.com",
-												"description": "Email of customer"
-											},
-											"spent": {
-												"type": "string",
-												"example": "2,300.50",
-												"description": "Spent"
-											},
-											"phone": {
-												"type": "string",
-												"example": "+380707614324",
-												"description": "Phone of customer"
-											},
-											"address": {
-												"type": "string",
-												"example": "Obolon, Bldg. 10, Apt. 45",
-												"description": "Address of customer"
-											},
-											"register_date": {
-												"type": "string",
-												"example": "Mar 1, 2024",
-												"description": "Register date of customer"
-											}
+								"example": {
+									"totalPage": 1,
+									"currentPage": 1,
+									"data": [
+										{
+											"_id": "664b2ea60080ad5f5febd495",
+											"photo": "https://i.imgur.com/1As0akH.png1",
+											"name": "Nadia Ivanova",
+											"email": "nadia.ivanova@gmail.com",
+											"spent": 2300.5,
+											"phone": "+380707614324",
+											"address": "Obolon, Bldg. 10, Apt. 45",
+											"register_date": "2024-03-18T23:00:00.000Z"
 										}
-									},
-									"example": {
-										"_id:": "664b2ea60080ad5f5febd495",
-										"photo": "https://i.imgur.com/1As0akH.png1",
-										"name": "Nadia Ivanova",
-										"email": "nadia.ivanova@gmail.com",
-										"spent": "2,300.50",
-										"phone": "+380707614324",
-										"address": "Obolon, Bldg. 10, Apt. 45",
-										"register_date": "Mar 1, 2024"
-									}
+									]
 								}
 							}
 						}
 					},
-					"400": {
-						"description": "_id is not valid id"
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
@@ -515,63 +358,21 @@
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Data customer fetching successful",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"_id": {
-											"type": "string",
-											"example": "664b2ea60080ad5f5febd495",
-											"description": "id"
-										},
-										"photo": {
-											"type": "string",
-											"example": "https://i.imgur.com/1As0akH.png1",
-											"description": "Url photo"
-										},
-										"name": {
-											"type": "string",
-											"example": "Nadia Ivanova",
-											"description": "Name of customer"
-										},
-										"email": {
-											"type": "string",
-											"example": "nadia.ivanova@gmail.com",
-											"description": "Email of customer"
-										},
-										"spent": {
-											"type": "string",
-											"example": "2,300.50",
-											"description": "Spent"
-										},
-										"phone": {
-											"type": "string",
-											"example": "+380707614324",
-											"description": "Phone of customer"
-										},
-										"address": {
-											"type": "string",
-											"example": "Obolon, Bldg. 10, Apt. 45",
-											"description": "Address of customer"
-										},
-										"register_date": {
-											"type": "string",
-											"example": "Mar 1, 2024",
-											"description": "Register date of customer"
-										}
-									}
+									"$ref": "#/components/schemas/Customer"
 								},
 								"example": {
-									"_id:": "664b2ea60080ad5f5febd495",
+									"_id": "664b2ea60080ad5f5febd495",
 									"photo": "https://i.imgur.com/1As0akH.png1",
 									"name": "Nadia Ivanova",
 									"email": "nadia.ivanova@gmail.com",
-									"spent": "2,300.50",
+									"spent": 2300.5,
 									"phone": "+380707614324",
 									"address": "Obolon, Bldg. 10, Apt. 45",
-									"register_date": "Mar 1, 2024"
+									"register_date": "2024-03-18T23:00:00.000Z"
 								}
 							}
 						}
@@ -579,6 +380,12 @@
 				},
 				"400": {
 					"description": "_id is not valid id"
+				},
+				"401": {
+					"description": "Unauthorized"
+				},
+				"500": {
+					"description": "Internal Server Error"
 				}
 			}
 		},
@@ -610,7 +417,7 @@
 						}
 					},
 					{
-						"name": "nameOrder",
+						"name": "searchName",
 						"in": "query",
 						"description": "Filter orders by name",
 						"required": false,
@@ -640,7 +447,7 @@
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Data orders fetching successful",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -648,52 +455,33 @@
 									"items": {
 										"type": "object",
 										"properties": {
-											"_id": {
-												"type": "string",
-												"example": "65cb32121b768ed2b321e4ea"
+											"totalPage": {
+												"type": "integer",
+												"example": 1,
+												"description": "Total number of pages"
 											},
-											"name": {
-												"type": "string",
-												"example": "task"
+											"currentPage": {
+												"type": "integer",
+												"example": 1,
+												"description": "Current page number"
 											},
-											"text": {
-												"type": "string",
-												"example": "go to"
-											},
-											"deadline": {
-												"type": "Number"
-											},
-											"priority": {
-												"type": "string",
-												"example": "without"
-											},
-											"columnId": {
-												"type": "string",
-												"example": "65cb76b2554c359c6c79b7cb"
-											},
-											"owner": {
-												"type": "object",
-												"properties": {
-													"_id": {
-														"type": "string",
-														"example": "65c1588b623ec1693c4a6a1e"
-													}
+											"data": {
+												"type": "array",
+												"items": {
+													"$ref": "#/components/schemas/Order"
 												}
 											}
-										},
-										"required": [
-											"_id",
-											"name",
-											"columnId",
-											"priority",
-											"deadline",
-											"text",
-											"owner"
-										]
+										}
 									}
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
@@ -726,7 +514,7 @@
 						}
 					},
 					{
-						"name": "nameProduct",
+						"name": "searchName",
 						"in": "query",
 						"description": "Filter products by name",
 						"required": false,
@@ -762,11 +550,35 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"$ref": "#/components/schemas/Product"
+										"type": "object",
+										"properties": {
+											"totalPage": {
+												"type": "integer",
+												"example": 1,
+												"description": "Total number of pages"
+											},
+											"currentPage": {
+												"type": "integer",
+												"example": 1,
+												"description": "Current page number"
+											},
+											"data": {
+												"type": "array",
+												"items": {
+													"$ref": "#/components/schemas/Product"
+												}
+											}
+										}
 									}
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			},
@@ -778,7 +590,35 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Product"
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"example": "Aspirin",
+										"description": "Name of product"
+									},
+									"suppliers": {
+										"type": "string",
+										"example": "Square",
+										"description": "Suppliers"
+									},
+									"stock": {
+										"type": "integer",
+										"example": 12,
+										"description": "Quantity in stock"
+									},
+									"price": {
+										"type": "integer",
+										"example": 145,
+										"description": "Price"
+									},
+									"category": {
+										"type": "string",
+										"example": "Medicine",
+										"description": "Category"
+									}
+								},
+								"required": ["name", "suppliers", "stock", "price", "category"]
 							}
 						}
 					}
@@ -789,30 +629,16 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "pavlo"
-										},
-										"boarderId": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e",
-											"description": "Owner's user ID"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94",
-											"description": "Board ID"
-										}
-									}
+									"$ref": "#/components/schemas/Product"
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				},
 				"security": [
@@ -838,40 +664,118 @@
 					}
 				],
 				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"example": "Aspirin",
+										"description": "Name of product"
+									},
+									"suppliers": {
+										"type": "string",
+										"example": "Square",
+										"description": "Suppliers"
+									},
+									"stock": {
+										"type": "integer",
+										"example": 12,
+										"description": "Quantity in stock"
+									},
+									"price": {
+										"type": "integer",
+										"example": 145,
+										"description": "Price"
+									},
+									"category": {
+										"type": "string",
+										"example": "Medicine",
+										"description": "Category"
+									}
+								},
+								"required": ["name", "suppliers", "stock", "price", "category"]
+							}
+						}
+					}
+				},
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Product edited",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"_id": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"name": {
-											"type": "string",
-											"example": "pas"
-										},
-										"boarderId": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e"
-										}
-									},
-									"required": ["_id", "name", "boarderId", "owner"]
+									"$ref": "#/components/schemas/Product"
 								}
 							}
 						}
 					},
 					"400": {
 						"description": "_id is not valid id"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
+			},
+			"delete": {
+				"tags": ["Products"],
+				"summary": "Delete product",
+				"parameters": [
+					{
+						"name": "productId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "The ID of the product"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product deleted successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"example": "Aspirin",
+											"description": "Name of product"
+										},
+										"_id": {
+											"type": "string",
+											"example": "664b2ea60080ad5f5febd495",
+											"description": "id"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "_id is not valid id"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
 			}
 		},
 
@@ -902,7 +806,7 @@
 						}
 					},
 					{
-						"name": "nameSupplier",
+						"name": "searchName",
 						"in": "query",
 						"description": "Filter suppliers by name",
 						"required": false,
@@ -932,7 +836,7 @@
 				"security": [{ "Bearer": [] }],
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Data suppliers fetching successful",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -940,33 +844,33 @@
 									"items": {
 										"type": "object",
 										"properties": {
-											"_id": {
-												"type": "string",
-												"example": "65cb32121b768ed2b321e4ea"
+											"totalPage": {
+												"type": "integer",
+												"example": 1,
+												"description": "Total number of pages"
 											},
-											"name": {
-												"type": "string",
-												"example": "pas"
+											"currentPage": {
+												"type": "integer",
+												"example": 1,
+												"description": "Current page number"
 											},
-											"boarderId": {
-												"type": "string",
-												"example": "65cb32121b768ed2b321e4ea"
-											},
-											"owner": {
-												"type": "object",
-												"properties": {
-													"_id": {
-														"type": "string",
-														"example": "65c1588b623ec1693c4a6a1e"
-													}
+											"data": {
+												"type": "array",
+												"items": {
+													"$ref": "#/components/schemas/Supplier"
 												}
 											}
-										},
-										"required": ["_id", "name", "boarderId", "owner"]
+										}
 									}
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			},
@@ -978,8 +882,42 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ColumnPost"
-							}
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"example": "Alex Shatov",
+										"description": "Name of supplier"
+									},
+									"address": {
+										"type": "string",
+										"example": "Mripur-1",
+										"description": "Address of supplier"
+									},
+									"suppliers": {
+										"type": "string",
+										"example": "Square",
+										"description": "Suppliers"
+									},
+									"date": {
+										"type": "string",
+										"example": "2024-03-18T23:00:00.000Z",
+										"description": "Date of supplier"
+									},
+									"amount": {
+										"type": "integer",
+										"example": 6952.53,
+										"description": "Amount"
+									},
+									"status": {
+										"type": "string",
+										"enum": ["Active", "Deactive"],
+										"example": "Active",
+										"description": "Status"
+									}
+								}
+							},
+							"required": ["name", "address", "suppliers", "date", "amount", "status"]
 						}
 					}
 				},
@@ -989,30 +927,16 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"name": {
-											"type": "string",
-											"example": "pavlo"
-										},
-										"boarderId": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e",
-											"description": "Owner's user ID"
-										},
-										"_id": {
-											"type": "string",
-											"example": "65cb65e681cdb00ebc7fac94",
-											"description": "Board ID"
-										}
-									}
+									"$ref": "#/components/schemas/Supplier"
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				},
 				"security": [
@@ -1038,38 +962,69 @@
 					}
 				],
 				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string",
+										"example": "Alex Shatov",
+										"description": "Name of supplier"
+									},
+									"address": {
+										"type": "string",
+										"example": "Mripur-1",
+										"description": "Address of supplier"
+									},
+									"suppliers": {
+										"type": "string",
+										"example": "Square",
+										"description": "Suppliers"
+									},
+									"date": {
+										"type": "string",
+										"example": "2024-03-18T23:00:00.000Z",
+										"description": "Date of supplier"
+									},
+									"amount": {
+										"type": "integer",
+										"example": 6952.53,
+										"description": "Amount"
+									},
+									"status": {
+										"type": "string",
+										"enum": ["Active", "Deactive"],
+										"example": "Active",
+										"description": "Status"
+									}
+								}
+							},
+							"required": ["name", "address", "suppliers", "date", "amount", "status"]
+						}
+					}
+				},
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Supplier edited",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"_id": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"name": {
-											"type": "string",
-											"example": "pas"
-										},
-										"boarderId": {
-											"type": "string",
-											"example": "65cb32121b768ed2b321e4ea"
-										},
-										"owner": {
-											"type": "string",
-											"example": "65c1588b623ec1693c4a6a1e"
-										}
-									},
-									"required": ["_id", "name", "boarderId", "owner"]
+									"$ref": "#/components/schemas/Supplier"
 								}
 							}
 						}
 					},
 					"400": {
 						"description": "_id is not valid id"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"500": {
+						"description": "Internal Server Error"
 					}
 				}
 			}
@@ -1114,8 +1069,8 @@
 						"description": "Email of customer"
 					},
 					"spent": {
-						"type": "number",
-						"example": "2,300.50",
+						"type": "integer",
+						"example": 2300.5,
 						"description": "Spent"
 					},
 					"phone": {
@@ -1130,7 +1085,7 @@
 					},
 					"register_date": {
 						"type": "string",
-						"example": "Mar 1, 2024",
+						"example": "2024-03-18T23:00:00.000Z",
 						"description": "Register date of customer"
 					}
 				}
@@ -1159,23 +1114,24 @@
 						"description": "Address of client"
 					},
 					"products": {
-						"type": "number",
-						"example": "12",
+						"type": "integer",
+						"example": 12,
 						"description": "Quantity products"
 					},
 					"price": {
-						"type": "number",
-						"example": "145",
+						"type": "integer",
+						"example": 145,
 						"description": "Price"
 					},
 					"status": {
 						"type": "string",
+						"enum": ["Pending", "Processing", "Confirmed", "Completed", "Canceled"],
 						"example": "Complected",
 						"description": "Status order"
 					},
 					"order_date": {
 						"type": "string",
-						"example": "July 31, 2023",
+						"example": "2024-03-18T23:00:00.000Z",
 						"description": "Order date"
 					}
 				}
@@ -1204,13 +1160,13 @@
 						"description": "Suppliers"
 					},
 					"stock": {
-						"type": "number",
-						"example": "12",
+						"type": "integer",
+						"example": 12,
 						"description": "Quantity in stock"
 					},
 					"price": {
-						"type": "number",
-						"example": "145",
+						"type": "integer",
+						"example": 145,
 						"description": "Price"
 					},
 					"category": {
@@ -1225,17 +1181,17 @@
 				"properties": {
 					"_id": {
 						"type": "string",
-						"example": "664b2ea60080ad5f5febd495",
+						"example": "664b2f470080ad5f5febd57f",
 						"description": "id"
 					},
 					"name": {
 						"type": "string",
-						"example": "Aspirin",
-						"description": "Name of product"
+						"example": "Alex Shatov",
+						"description": "Name of supplier"
 					},
 					"address": {
 						"type": "string",
-						"example": "Obolon, Bldg. 10, Apt. 45",
+						"example": "Mripur-1",
 						"description": "Address of supplier"
 					},
 					"suppliers": {
@@ -1245,16 +1201,17 @@
 					},
 					"date": {
 						"type": "string",
-						"example": "Mar 1, 2024",
+						"example": "2024-03-18T23:00:00.000Z",
 						"description": "Date of supplier"
 					},
 					"amount": {
-						"type": "number",
-						"example": "6952.53",
+						"type": "integer",
+						"example": 6952.53,
 						"description": "Amount"
 					},
 					"status": {
 						"type": "string",
+						"enum": ["Active", "Deactive"],
 						"example": "Active",
 						"description": "Status"
 					}
@@ -1274,8 +1231,8 @@
 						"description": "Name"
 					},
 					"amount": {
-						"type": "number",
-						"example": "+1,200.88",
+						"type": "integer",
+						"example": 1200.88,
 						"description": "Amount"
 					},
 					"type": {

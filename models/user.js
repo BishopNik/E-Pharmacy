@@ -30,7 +30,6 @@ const userSchema = new Schema(
 	{ versionKey: false, timestamps: true }
 );
 
-// Check body for login
 export const loginSchema = Joi.object({
 	email: Joi.string().pattern(emailRegexp).required(),
 	password: Joi.string().min(6).required(),

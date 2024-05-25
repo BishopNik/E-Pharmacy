@@ -2,7 +2,7 @@
 
 export const getDataSortFunc = async (
 	DB,
-	{ sortBy, revers, searchName, page = 1, perPage = 5 }
+	{ sortBy, reverse, searchName, page = 1, perPage = 5 }
 ) => {
 	if (!DB)
 		return {
@@ -19,7 +19,7 @@ export const getDataSortFunc = async (
 		limit: perPage,
 	}).sort(sortBy);
 
-	if (Number(revers)) {
+	if (Number(reverse)) {
 		dataDoc = dataDoc.reverse();
 	}
 
