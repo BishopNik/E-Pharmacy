@@ -6,8 +6,8 @@ export const getAll = async (req, res) => {
 	const customersCount = await Customers.countDocuments();
 	const productCount = await Products.countDocuments();
 	const supplierCount = await Suppliers.countDocuments();
-	const dataIncomeExpenses = await IncomeExpenses.find().sort({ _id: -1 }).limit(5);
-	const dataCustomers = await Customers.find().sort({ _id: -1 }).limit(6);
+	const dataIncomeExpenses = await IncomeExpenses.find().sort({ _id: -1 }).limit(6);
+	const dataCustomers = await Customers.find().sort({ _id: -1 }).limit(5);
 
 	res.json({
 		totalProducts: productCount,
