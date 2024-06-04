@@ -17,7 +17,7 @@ const supplierSchema = new Schema(
 			required: true,
 			trim: true,
 		},
-		suppliers: {
+		company: {
 			type: String,
 			required: true,
 			trim: true,
@@ -51,7 +51,7 @@ export const Suppliers = model('supplier', supplierSchema);
 export const supplierJoiSchema = Joi.object({
 	name: Joi.string().required(),
 	address: Joi.string().required(),
-	suppliers: Joi.string().required(),
+	company: Joi.string().required(),
 	date: Joi.date().required(),
 	amount: Joi.number().precision(2).required(),
 	status: Joi.string()

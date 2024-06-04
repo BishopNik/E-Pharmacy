@@ -943,7 +943,7 @@
 										"example": "Mripur-1",
 										"description": "Address of supplier"
 									},
-									"suppliers": {
+									"company": {
 										"type": "string",
 										"example": "Square",
 										"description": "Suppliers"
@@ -966,7 +966,7 @@
 									}
 								}
 							},
-							"required": ["name", "address", "suppliers", "date", "amount", "status"]
+							"required": ["name", "address", "company", "date", "amount", "status"]
 						}
 					}
 				},
@@ -1028,7 +1028,7 @@
 										"example": "Mripur-1",
 										"description": "Address of supplier"
 									},
-									"suppliers": {
+									"company": {
 										"type": "string",
 										"example": "Square",
 										"description": "Suppliers"
@@ -1051,7 +1051,7 @@
 									}
 								}
 							},
-							"required": ["name", "address", "suppliers", "date", "amount", "status"]
+							"required": ["name", "address", "company", "date", "amount", "status"]
 						}
 					}
 				},
@@ -1243,7 +1243,7 @@
 						"example": "Mripur-1",
 						"description": "Address of supplier"
 					},
-					"suppliers": {
+					"company": {
 						"type": "string",
 						"example": "Square",
 						"description": "Suppliers"
