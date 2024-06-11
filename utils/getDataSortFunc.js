@@ -14,14 +14,14 @@ export const getDataSortFunc = async (
 	const query = searchName ? { name: { $regex: searchName, $options: 'i' } } : {};
 
 	const countDoc = await DB.countDocuments(query);
-	let dataDoc = await DB.find(query, '-createdAt -updatedAt', {
+
+	const sortField = {};
+	sortField[sortBy] = Number(reverse) ? -1 : 1;
+
+	const dataDoc = await DB.find(query, '-createdAt -updatedAt', {
 		skip,
 		limit: perPage,
-	}).sort(sortBy);
-
-	if (Number(reverse)) {
-		dataDoc = dataDoc.reverse();
-	}
+	}).sort(sortField);
 
 	const totalPage = Math.ceil(countDoc / perPage);
 
