@@ -7,12 +7,19 @@ export const refresh = async ({ user }, res) => {
 
 	const currentUser = await User.findOne({ _id });
 
-	res.json({
-		token: currentUser.token,
-		user: {
-			id: currentUser._id,
-			name: currentUser.name,
-			email: currentUser.email,
-		},
-	});
+	if (currentUser.token) {
+		res.json({
+			token: currentUser.token,
+			user: {
+				id: currentUser._id,
+				name: currentUser.name,
+				email: currentUser.email,
+			},
+		});
+	} else {
+		res.json({
+			token: '',
+			user: null,
+		});
+	}
 };
