@@ -16,7 +16,9 @@ export const getDataSortFunc = async (
 	const countDoc = await DB.countDocuments(query);
 
 	const sortField = {};
-	sortField[sortBy] = Number(reverse) ? -1 : 1;
+	if (sortBy) {
+		sortField[sortBy] = Number(reverse) ? -1 : 1;
+	}
 
 	const dataDoc = await DB.find(query, '-createdAt -updatedAt', {
 		skip,
